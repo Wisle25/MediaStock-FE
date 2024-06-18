@@ -6,6 +6,7 @@ import { useAuth } from "../Providers/AuthProvider";
 import { useToaster } from "../Providers/ToastProvider";
 import RatingForm from "../Components/RatingForm";
 import Review from "../Components/Review";
+import CommentForm from "../Components/CommentForm";
 
 const DetailAsset: Component = () => {
     const { loggedUser } = useAuth();
@@ -70,22 +71,37 @@ const DetailAsset: Component = () => {
     // Ratings
     const [ratings, setRatings] = createSignal([]);
     const [hasRating, setHasRating] = createSignal(-1);
+    const fetchRating = async () => {
+        const response = await fetch("http://localhost:8000/ratings/" + asset().id);
+        const responseJson = await response.json();
+    
+        if (responseJson.status === "success") {
+            setRatings(responseJson.data);
+    
+            // Check is user has given a rating
+            if (loggedUser() && ratings()) {
+                setHasRating(
+                    ratings().findIndex(rating => rating.username === loggedUser().username)
+                );
+            }
+        }
+    }
+
+    // Comments
+    const [comments, setComments] = createSignal([]);
+    const fetchComments = async () => {
+        const response = await fetch("http://localhost:8000/comments/" + asset().id);
+        const responseJson = await response.json();
+    
+        if (responseJson.status === "success") {
+            setComments(responseJson.data);
+        }
+    }
     
     createEffect(async () => {
         if (asset()) {
-            const response = await fetch("http://localhost:8000/ratings/" + asset().id);
-            const responseJson = await response.json();
-
-            if (responseJson.status === "success") {
-                setRatings(responseJson.data);
-
-                // Check is user has given a rating
-                if (loggedUser() && ratings()) {
-                    setHasRating(
-                        ratings().findIndex(rating => rating.username === loggedUser().username)
-                    );
-                }
-            }
+            fetchRating();
+            fetchComments();
         }
     });
 
@@ -185,7 +201,19 @@ const DetailAsset: Component = () => {
             <div class="flex mt-10 h-[47.7%]">
                 <section class="w-1/2 p-2 border-r-2">
                     <h3 class="font-['Nunito'] text-xl font-bold">Comments:</h3>
-                    <Comment username="Test" avatarUrl="Test" commentDate="Hari ini" commentText="Komentar saya" />
+                    <For each={comments()} fallback={<div class="text-center my-5">No comments were added! Be the first one!</div>}>
+                    {(item) =>
+                        <Comment
+                            id={item.id}
+                            username={item.username} 
+                            avatarUrl={item.avatar_link} 
+                            commentDate={item.created_at}
+                            commentText={item.content} 
+                            owned={loggedUser() && loggedUser().username === item.username}
+                        />
+                    }
+                    </For>
+                    <CommentForm assetId={asset().id} />
                 </section>
 
                 <section class="w-1/2 p-2 border-l-2">
