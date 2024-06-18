@@ -1,9 +1,11 @@
-import { Component, createResource, Show } from "solid-js";
+import { Component, createEffect, createResource, createSignal, For, Show } from "solid-js";
 import { useNavigate, useParams } from "@solidjs/router";
 import Button from "../Components/Button";
 import Comment from "../Components/Comment";
 import { useAuth } from "../Providers/AuthProvider";
 import { useToaster } from "../Providers/ToastProvider";
+import RatingForm from "../Components/RatingForm";
+import Review from "../Components/Review";
 
 const DetailAsset: Component = () => {
     const { loggedUser } = useAuth();
@@ -65,6 +67,28 @@ const DetailAsset: Component = () => {
         showToast(responseJson)
     }
 
+    // Ratings
+    const [ratings, setRatings] = createSignal([]);
+    const [hasRating, setHasRating] = createSignal(-1);
+    
+    createEffect(async () => {
+        if (asset()) {
+            const response = await fetch("http://localhost:8000/ratings/" + asset().id);
+            const responseJson = await response.json();
+
+            if (responseJson.status === "success") {
+                setRatings(responseJson.data);
+
+                // Check is user has given a rating
+                if (loggedUser() && ratings()) {
+                    setHasRating(
+                        ratings().findIndex(rating => rating.username === loggedUser().username)
+                    );
+                }
+            }
+        }
+    });
+
     return (
         <main class="w-3/4 mx-auto my-10">
             {asset.loading && <p>Loading...</p>}
@@ -103,7 +127,7 @@ const DetailAsset: Component = () => {
                     {/* Review, Favorite, Bought for x times */}
                     <section class="flex items-center gap-x-10 text-2xl shadow-lg w-fit p-3 rounded border-2 my-4">
                         <div class="flex items-center text-yellow-500">
-                            <i class="fas fa-star mr-1"></i>4.5/5
+                            <i class="fas fa-star mr-1"></i>{asset().rating}/5
                         </div>
                         <div class="flex items-center text-red-500">
                             <i class="fas fa-heart mr-1"></i>{asset().favorite_count} Likes
@@ -166,7 +190,22 @@ const DetailAsset: Component = () => {
 
                 <section class="w-1/2 p-2 border-l-2">
                     <h3 class="font-['Nunito'] text-xl font-bold">Reviews:</h3>
-                    <Comment username="Test" avatarUrl="Test" commentDate="Hari ini" commentText="Review saya..." />
+                    <For each={ratings()} fallback={<div class="text-center my-5">No reviews were added! Be the first one!</div>}>
+                        {(item, idx) =>
+                            <Review
+                                id={item.id}
+                                username={item.username} 
+                                avatarUrl={item.user_avatar} 
+                                description={item.description} 
+                                reviewDate={item.created_at} 
+                                score={item.score}
+                                owned={hasRating() == idx()}
+                            />
+                        }
+                    </For>
+                    <Show when={asset() && asset().is_purchased && hasRating() === -1}>
+                        <RatingForm assetId={asset().id} />
+                    </Show>
                 </section>
             </div>
         </main>

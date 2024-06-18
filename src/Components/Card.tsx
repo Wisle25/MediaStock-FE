@@ -9,6 +9,7 @@ interface CardProps {
     imageUrl: string;
     favorite_count: number;
     is_favorite: boolean;
+    rating: number;
 
     onClick: (id: string) => void;
 }
@@ -62,7 +63,7 @@ const Card: Component<CardProps> = (props) => {
                     <i class="fas fa-heart mr-1"></i>{props.favorite_count}
                 </div>
                 <div class="flex items-center text-yellow-500">
-                    <i class="fas fa-star mr-1"></i>4.5
+                    <i class="fas fa-star mr-1"></i>{props.rating}
                 </div>
             </section>
 

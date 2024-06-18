@@ -17,7 +17,7 @@ const Store: Component = () => {
     const [assets] = createResource(async () => {
         const response = await fetch(`http://localhost:8000/assets?listCount=${items()}&pageList=${page()}${ loggedUser() ? "&userId=" + loggedUser().user_id : "" }`)
         const responseJson = await response.json();
-        
+
         if (responseJson.status === "success") {
             return responseJson.data;
         }
@@ -63,6 +63,7 @@ const Store: Component = () => {
                                 imageUrl={`http://localhost:9000/media-stock/${item.file_watermark_path}`}
                                 favorite_count={item.favorite_count}
                                 is_favorite={item.is_favorite}
+                                rating={item.rating}
                                 onClick={toDetailAsset}
                             />
                         }
