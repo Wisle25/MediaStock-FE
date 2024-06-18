@@ -1,18 +1,17 @@
 import { Component } from "solid-js";
 import Header from "../Layouts/Header";
-import Section from "../Components/home-about-contact/Section";
-import Main from "../Components/home-about-contact/Main";
-import Service from "../Components/home-about-contact/Service";
+
 import Footer from "../Components/home-about-contact/Footer";
+import Faq from "../Components/home-about-contact/Faq";
+import ContactAdmin from "../Components/home-about-contact/ContactAdmin";
 
 
 const Home: Component = () => {
     return (
         <div class="w-full">
             <Header />
-            <Section />
-            <Main />
-            <Service />
+            <Faq />
+            <ContactAdmin />
             <Footer />
         </div>
     )

@@ -3,7 +3,7 @@ import { createSignal } from "solid-js";
 function Section() {
     return (
         <div>
-            <section id="hero" class="flex items-center bg-cover bg-no-repeat bg-top px-40 py-5 hero" style="background-image: url('../img/hero-bg.png');">
+            <section id="hero" class="flex items-center bg-cover bg-no-repeat bg-top px-40 py-16 hero" style="background-image: url('../src/assets/img/hero-bg.png');">
                 <div class="mx-auto py-4 container">
                     <div class="flex flex-wrap">
                         <div class="flex flex-col justify-center lg:w-1/2 text-center lg:text-left hero-content">

@@ -13,6 +13,7 @@ const Home = lazy(() => import("./Pages/Home"));
 const About = lazy(() => import("./Pages/About"));
 const Auth = lazy(() => import("./Pages/Auth"));
 const Store = lazy(() => import("./Pages/Store"));
+const Contact = lazy(() => import("./Pages/Contact"));
 const AssetForm = lazy(() => import("./Pages/AssetForm"))
 const DetailAsset = lazy(() => import("./Pages/DetailAsset"))
 const CartFavorite = lazy(() => import("./Pages/CartFavorite"))
@@ -35,7 +36,7 @@ render(() => (
         <Route component={App}>
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
-
+          <Route path="/contact" component={Contact} />
           <Route path="/store" component={Store} />
           <Route path="/asset-form" component={AssetForm} />
           <Route path="/asset/:id" component={DetailAsset} />
