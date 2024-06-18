@@ -41,9 +41,9 @@ const FooterLinks = (props: { title: string; links: { title: string; url: string
         <h4 class="font-semibold text-lg text-primary">{props.title}</h4>
         <ul class="flex flex-col mx-1 text-gray-700">
             <Link href="/" class="my-0.5 hover:text-primary">Home</Link>
-            <Link href="/" class="my-0.5 hover:text-primary">About</Link>
+            <Link href="/about" class="my-0.5 hover:text-primary">About</Link>
             <Link href="/Store" class="my-0.5 hover:text-primary">Store</Link>
-            <Link href="/" class="my-0.5 hover:text-primary">Contact</Link>
+            <Link href="/contact" class="my-0.5 hover:text-primary">Contact</Link>
         </ul>
     </div>
 );
