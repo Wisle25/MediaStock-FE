@@ -16,7 +16,7 @@ const DetailAsset: Component = () => {
 
     // Fetch the asset details using the asset id from the route
     const [asset] = createResource(async () => {
-        const response = await fetch(`http://localhost:8000/assets/${params.id}${ loggedUser() ? "?userId=" + loggedUser().user_id : "" }`);
+        const response = await fetch(`http://localhost:8000/assets/${params.id}${ loggedUser() ? "?userId=" + loggedUser().id : "" }`);
         const responseJson = await response.json();
 
         if (responseJson.status === "success") {
@@ -128,7 +128,7 @@ const DetailAsset: Component = () => {
                             }
 
                             {/* Delete Asset (Only appears to admin or owner) */}
-                            {(loggedUser() != null && loggedUser().user_id === asset().owner_id) && (
+                            {(loggedUser() != null && loggedUser().id === asset().owner_id) && (
                             <>
                                 <button title="Update asset" onClick={() => navigate(`/asset-form?ctx=update&id=${asset().id}`)}>
                                     <i class="fa-solid fa-pen-to-square text-2xl p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"></i>

@@ -17,6 +17,7 @@ const Contact = lazy(() => import("./Pages/Contact"));
 const AssetForm = lazy(() => import("./Pages/AssetForm"))
 const DetailAsset = lazy(() => import("./Pages/DetailAsset"))
 const CartFavorite = lazy(() => import("./Pages/CartFavorite"))
+const Dashboard = lazy(() => import("./Pages/Dashboard"))
 
 // ...
 const root = document.getElementById("root");
@@ -41,6 +42,7 @@ render(() => (
           <Route path="/asset-form" component={AssetForm} />
           <Route path="/asset/:id" component={DetailAsset} />
           <Route path="/cart-favorite" component={CartFavorite} />
+          <Route path="/dashboard" component={Dashboard} />
         </Route>
         <Route path="/auth" component={Auth} />
       </Router>

@@ -97,7 +97,7 @@ const AssetForm: Component = () => {
         if (searchParams.ctx == "update") {
             // Get Text Data
             const assetId = searchParams.id;
-            const response = await fetch(`http://localhost:8000/assets/${assetId}?userId=`+loggedUser().user_id, {
+            const response = await fetch(`http://localhost:8000/assets/${assetId}?userId=`+loggedUser().id, {
                 method: "GET",
                 credentials: "include",
             });

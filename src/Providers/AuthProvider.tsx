@@ -1,9 +1,11 @@
 import { createContext, useContext, Component, createSignal, ParentProps, onMount, Setter } from "solid-js";
 
 interface User {
-    user_id: string;
+    id: string;
     username: string;
-    is_verified: boolean;
+    email: string;
+    avatarLink: string;
+    isVerified: boolean;
 }
 
 interface AuthContextType {

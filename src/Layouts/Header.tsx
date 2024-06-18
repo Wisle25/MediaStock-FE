@@ -6,6 +6,7 @@ import { useToaster } from "../Providers/ToastProvider";
 import { useNavigate } from "@solidjs/router";
 
 import logo from "/LogoCropped.png?url"
+import anonym from "/Anonym.jpg?url"
 
 const Header: Component = () => {
     const { loggedUser, refreshUser } = useAuth();
@@ -38,6 +39,11 @@ const Header: Component = () => {
         setUserOptionOpen(false);
     }
 
+    const toDashboard = () => {
+        navigate("/dashboard")
+        setUserOptionOpen(false);
+    }
+
     return (
         <header class="top-0 z-10 fixed flex justify-between items-center bg-white shadow-md px-10 py-3 w-full font-['Nunito'] font-bold text-lg text-primary">
             {/* Logo section */}
@@ -57,10 +63,16 @@ const Header: Component = () => {
             {/** User Info */}
             {loggedUser() ? 
                 <section class="flex items-center gap-x-3">
-                    <span class="underline whitespace-nowrap cursor-pointer" onClick={() => setUserOptionOpen(!userOptionOpen())}>Hello, {loggedUser().username}!</span>
+                    <p class="underline whitespace-nowrap cursor-pointer" onClick={() => setUserOptionOpen(!userOptionOpen())}>Hello, {loggedUser().username}!</p>
+                    <img 
+                        src={loggedUser().avatarLink ? "http://localhost:9000/media-stock/" + loggedUser().avatarLink : anonym}
+                        alt="User Avatar" 
+                        class="w-12 h-12 rounded-full object-cover cursor-pointer"
+                        onClick={() => document.getElementById("avatarInput")?.click()}
+                    />
                     <Show when={userOptionOpen()}>
                         <div class="top-full right-10 absolute border-gray-300 bg-white shadow-lg mt-2 border rounded-lg w-48">
-                            <Button text="Dashboard" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-table-columns" />
+                            <Button text="Dashboard" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-table-columns" onClick={toDashboard} />
                             <Button text="Cart and Favorite" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-cart-shopping" onClick={toCartFavorite} />
                             <Button text="Logout" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-door-open" onClick={handleLogout} />
                         </div>

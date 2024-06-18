@@ -15,7 +15,7 @@ const Store: Component = () => {
 
     // Get Asset store data
     const [assets] = createResource(async () => {
-        const response = await fetch(`http://localhost:8000/assets?listCount=${items()}&pageList=${page()}${ loggedUser() ? "&userId=" + loggedUser().user_id : "" }`)
+        const response = await fetch(`http://localhost:8000/assets?listCount=${items()}&pageList=${page()}${ loggedUser() ? "&userId=" + loggedUser().id : "" }`)
         const responseJson = await response.json();
 
         if (responseJson.status === "success") {

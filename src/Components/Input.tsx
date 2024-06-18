@@ -1,4 +1,4 @@
-import { Component, createSignal, mergeProps, Show } from "solid-js";
+import { Component, createSignal, mergeProps, onMount, Show } from "solid-js";
 
 interface InputProps {
     name: string;
@@ -59,6 +59,13 @@ const Input: Component<InputProps> = (props) => {
             setAnimateLabel(false);
         }
     };
+
+    onMount(() => {
+        if (props.value !== "") {
+            setVisibleLabel(true);
+            setAnimateLabel(true);
+        }
+    })
 
     return (
         <div class="flex flex-col my-4 font-['Nunito'] font-semibold">
