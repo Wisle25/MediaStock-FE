@@ -8,7 +8,7 @@ interface LinkProps extends AnchorProps {
 
 const Link: Component<LinkProps> = (props) => {
     const color = mergeProps({ 
-        color: "text-blue-500",
+        color: "#012970",
         hoverColor: "text-primaryLighter" 
     }, props);
 
