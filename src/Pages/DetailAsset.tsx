@@ -1,4 +1,4 @@
-import { Component, createResource } from "solid-js";
+import { Component, createResource, Show } from "solid-js";
 import { useNavigate, useParams } from "@solidjs/router";
 import Button from "../Components/Button";
 import Comment from "../Components/Comment";
@@ -39,6 +39,10 @@ const DetailAsset: Component = () => {
         }
     }
 
+    const downloadAsset = async () => {
+        window.location.href = `http://localhost:8000/assets-download/${params.id}`
+    }
+
     const toggleFavorite = async () => {
         const response = await fetch("http://localhost:8000/favorites/" + asset().id, {
             method: `${asset().is_favorite ? "DELETE" : "POST"}`,
@@ -49,6 +53,16 @@ const DetailAsset: Component = () => {
         showToast(responseJson)
         if (responseJson.status === "success")
             window.location.reload();
+    }
+
+    const toggleCart = async () => {
+        const response = await fetch("http://localhost:8000/carts/" + asset().id, {
+            method: `POST`,
+            credentials: "include",
+        })
+        const responseJson = await response.json();
+
+        showToast(responseJson)
     }
 
     return (
@@ -95,7 +109,7 @@ const DetailAsset: Component = () => {
                             <i class="fas fa-heart mr-1"></i>{asset().favorite_count} Likes
                         </div>
                         <div class="flex items-center text-green-700">
-                            <i class="fa-solid fa-cart-shopping mr-1"></i>10 Times
+                            <i class="fa-solid fa-cart-shopping mr-1"></i>{asset().purchased_count} Purchased
                         </div>
                     </section>
 
@@ -109,13 +123,31 @@ const DetailAsset: Component = () => {
 
                     {/* Pricing and interaction */}
                     <div class="flex justify-between items-center">
-                        <p class="font-['Teko'] text-4xl font-bold">{Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(asset().price)}</p>
+                        <Show when={!asset().is_purchased}>
+                            <p class="font-['Teko'] text-4xl font-bold">{Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(asset().price)}</p>
+                        </Show>
 
                         <div class="flex gap-x-5">
-                            <Button text="Buy Now" isFull={false} class="bg-green-600 hover:bg-green-500 text-xl" icon="fa-solid fa-cart-shopping" />
+                            {asset().is_purchased ? 
+                                <Button
+                                    text="Download"
+                                    isFull={false}
+                                    class="bg-green-600 hover:bg-green-700 text-xl"
+                                    icon="fa-solid fa-download"
+                                    onClick={downloadAsset}
+                                />
+                            : 
+                                <Button 
+                                    text="Add to Cart" 
+                                    isFull={false} 
+                                    class="bg-green-600 hover:bg-green-700 text-xl" 
+                                    icon="fa-solid fa-cart-shopping"
+                                    onClick={toggleCart}
+                                />
+                            }
                             <Button 
                                 text={`${asset().is_favorite ? "Remove from " : "Add To "} Favorite`} 
-                                isFull={false} class="bg-red-500 hover:bg-red-400 text-xl" 
+                                isFull={false} class="bg-red-500 hover:!bg-red-600 text-xl" 
                                 icon="fas fa-heart"
                                 onClick={toggleFavorite}
                             />

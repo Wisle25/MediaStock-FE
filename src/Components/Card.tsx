@@ -28,7 +28,7 @@ const Card: Component<CardProps> = (props) => {
 
     const toggleCart = async () => {
         const response = await fetch("http://localhost:8000/carts/" + props.id, {
-            method: `${props.is_favorite ? "DELETE" : "POST"}`,
+            method: `POST`,
             credentials: "include",
         })
         const responseJson = await response.json();

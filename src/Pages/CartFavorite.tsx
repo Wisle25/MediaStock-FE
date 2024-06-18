@@ -3,6 +3,7 @@ import { Component, createResource, createSignal, For } from "solid-js";
 import AssetList from "../Components/AssetList";
 import Link from "../Components/Link";
 import { useToaster } from "../Providers/ToastProvider";
+import Button from "../Components/Button";
 
 const AssetPage: Component = () => {
     const { showToast } = useToaster();
@@ -33,6 +34,7 @@ const AssetPage: Component = () => {
     
     // Carts
     const [totalPrice, setTotalPrice] = createSignal(0);
+    const [assetsId, setAssetsId] = createSignal<string[]>([])
 
     const [carts] = createResource(async () => {
         const response = await fetch("http://localhost:8000/carts", {
@@ -44,6 +46,7 @@ const AssetPage: Component = () => {
         // Calculate total price
         for (const asset of responseJson.data) {
             setTotalPrice((prev) => prev + Number(asset.price));
+            setAssetsId([...assetsId(), asset.id])
         }
 
         return responseJson.data;
@@ -59,6 +62,35 @@ const AssetPage: Component = () => {
 
         if (responseJson.status === "success")
             window.location.reload();
+    }
+
+    const removeAllCart = async () => {
+        const response = await fetch("http://localhost:8000/carts", {
+            method: "DELETE",
+            credentials: "include"
+        })
+
+        console.log(await response.json())
+    }
+
+    const checkOut = async () => {
+        const response = await fetch("http://localhost:8000/transactions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ total_amount: totalPrice(), items_id: assetsId() }),
+            credentials: "include"
+        })
+        console.log(JSON.stringify({ total_amount: totalPrice(), items_id: assetsId() }))
+        const responseJson = await response.json();
+
+        showToast(responseJson)
+
+        if (responseJson.status === "success") {
+            await removeAllCart();
+            window.location.reload();
+        }
     }
 
     return (
@@ -81,7 +113,7 @@ const AssetPage: Component = () => {
                 </For>
             </section>
 
-            <section class="w-1/2 p-4 border-x-2 border-yellow-500">
+            <section class="w-1/2 p-4 border-x-2 border-yellow-500 relative">
                 <h2 class="text-2xl font-bold mb-4 p-2 bg-yellow-500 w-fit mx-auto text-white rounded"><i class="fa-solid fa-cart-shopping"></i> Asset In Cart</h2>
                 <For each={carts()}>
                 {(asset) => (
@@ -94,9 +126,12 @@ const AssetPage: Component = () => {
                     />
                 )}
                 </For>
-                <div class="flex items-center justify-between">
-                    <p>Total Price:</p>
-                    <p>{Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(totalPrice())}</p>
+                <div class="absolute w-[97%] bottom-0">
+                    <div class="flex items-center justify-between">
+                        <p>Total Price:</p>
+                        <p>{Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(totalPrice())}</p>
+                    </div>
+                    <Button text="Checkout" icon="fa-solid fa-money-bill" onClick={checkOut} />
                 </div>
             </section>
         </div>

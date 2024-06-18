@@ -12,7 +12,7 @@ const Button: Component<ButtonProps> = (props) => {
     return (
         <button
             {...mergedProps}
-            class={`${mergedProps.class} bg-blue-500 p-2 rounded-lg hover:bg-blue-400 text-center
+            class={`${mergedProps.class} bg-blue-500 p-2 rounded-lg hover:bg-blue-600 text-center
             font-['Nunito'] font-bold text-white text-lg ${mergedProps.isFull ? "w-full" : "w-fit"}`}
         >
             <Show when={props.icon}>
