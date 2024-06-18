@@ -39,9 +39,7 @@ const Header: Component = () => {
     }
 
     return (
-        <header class="bg-white py-3 px-10 w-full font-['Nunito'] text-primary font-bold text-lg
-        flex justify-between items-center
-        fixed top-0 shadow-md z-10">
+        <header class="top-0 z-10 fixed flex justify-between items-center bg-white shadow-md px-10 py-3 w-full font-['Nunito'] font-bold text-lg text-primary">
             {/* Logo section */}
             <Link href="/" class="flex items-center gap-x-2">
                 <img src={logo} alt="Media-stock logo" width={75} />
@@ -51,20 +49,20 @@ const Header: Component = () => {
             {/* Nav Bar */}
             <nav class="flex gap-x-3">
                 <Link href="/">Home</Link>
-                <Link href="/">About</Link>
+                <Link href="/about">About</Link>
                 <Link href="/Store">Store</Link>
-                <Link href="/">Contact</Link>
+                <Link href="/contact">Contact</Link>
             </nav>
 
             {/** User Info */}
             {loggedUser() ? 
-                <section class="flex gap-x-3 items-center">
-                    <span class="whitespace-nowrap underline cursor-pointer" onClick={() => setUserOptionOpen(!userOptionOpen())}>Hello, {loggedUser().username}!</span>
+                <section class="flex items-center gap-x-3">
+                    <span class="underline whitespace-nowrap cursor-pointer" onClick={() => setUserOptionOpen(!userOptionOpen())}>Hello, {loggedUser().username}!</span>
                     <Show when={userOptionOpen()}>
-                        <div class="absolute right-10 top-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg w-48">
-                            <Button text="Dashboard" class="!text-black bg-white text-start hover:bg-gray-100" icon="fa-solid fa-table-columns" />
-                            <Button text="Cart and Favorite" class="!text-black bg-white text-start hover:bg-gray-100" icon="fa-solid fa-cart-shopping" onClick={toCartFavorite} />
-                            <Button text="Logout" class="!text-black bg-white text-start hover:bg-gray-100" icon="fa-solid fa-door-open" onClick={handleLogout} />
+                        <div class="top-full right-10 absolute border-gray-300 bg-white shadow-lg mt-2 border rounded-lg w-48">
+                            <Button text="Dashboard" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-table-columns" />
+                            <Button text="Cart and Favorite" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-cart-shopping" onClick={toCartFavorite} />
+                            <Button text="Logout" class="bg-white hover:bg-gray-100 !text-black text-start" icon="fa-solid fa-door-open" onClick={handleLogout} />
                         </div>
                     </Show>
                 </section>
