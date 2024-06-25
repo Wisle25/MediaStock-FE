@@ -79,10 +79,10 @@ const AssetPage: Component = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ total_amount: totalPrice(), items_id: assetsId() }),
+            body: JSON.stringify({ totalAmount: totalPrice(), assetsId: assetsId() }),
             credentials: "include"
         })
-        console.log(JSON.stringify({ total_amount: totalPrice(), items_id: assetsId() }))
+        console.log(JSON.stringify({ totalAmount: totalPrice(), assetsId: assetsId() }))
         const responseJson = await response.json();
 
         showToast(responseJson)
@@ -104,7 +104,7 @@ const AssetPage: Component = () => {
                 {(asset) => (
                     <AssetList
                         id={asset.id}
-                        imageUrl={"http://localhost:9000/media-stock/" + asset.file_path}
+                        imageUrl={asset.filePath}
                         title={asset.title}
                         price={asset.price}
                         onDeleteClick={removeFavorite}
@@ -119,7 +119,7 @@ const AssetPage: Component = () => {
                 {(asset) => (
                     <AssetList
                         id={asset.id}
-                        imageUrl={"http://localhost:9000/media-stock/" + asset.file_path}
+                        imageUrl={asset.filePath}
                         title={asset.title}
                         price={asset.price}
                         onDeleteClick={removeCart}

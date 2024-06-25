@@ -15,7 +15,6 @@ interface CommentProps {
 
 const Comment: Component<CommentProps> = (props) => {
     const { showToast } = useToaster();
-    const minio = "http://localhost:9000/media-stock/";
 
     const [isEditing, setIsEditing] = createSignal(false);
     const [updatedText, setUpdatedText] = createSignal(props.commentText);
@@ -37,8 +36,9 @@ const Comment: Component<CommentProps> = (props) => {
             body: JSON.stringify({ content: updatedText() })
         });
         const responseJson = await response.json();
-
-        showToast(responseJson);
+        if (responseJson.status === "success") {
+            window.location.reload();
+        }
     };
 
     const handleRemove = async () => {
@@ -47,13 +47,14 @@ const Comment: Component<CommentProps> = (props) => {
             credentials: "include"
         })
         const responseJson = await response.json();
-
-        showToast(responseJson);
+        if (responseJson.status === "success") {
+            window.location.reload();
+        }
     };
 
     return (
         <div class="flex items-start space-x-4 p-4 border-b border-gray-200 relative">
-            <img src={props.avatarUrl === "" ? anonym : minio + props.avatarUrl} alt={`${props.username}'s avatar`} class="w-12 h-12 rounded-full object-cover" />
+            <img src={props.avatarUrl === "" ? anonym : props.avatarUrl} alt={`${props.username}'s avatar`} class="w-12 h-12 rounded-full object-cover" />
             <div>
                 <div class="flex items-center space-x-2">
                     <h4 class="font-semibold">{props.username}</h4>

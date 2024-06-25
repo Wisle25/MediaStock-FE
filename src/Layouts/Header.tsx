@@ -65,7 +65,7 @@ const Header: Component = () => {
                 <section class="flex items-center gap-x-3">
                     <p class="underline whitespace-nowrap cursor-pointer" onClick={() => setUserOptionOpen(!userOptionOpen())}>Hello, {loggedUser().username}!</p>
                     <img 
-                        src={loggedUser().avatarLink ? "http://localhost:9000/media-stock/" + loggedUser().avatarLink : anonym}
+                        src={loggedUser().avatarLink ? loggedUser().avatarLink : anonym}
                         alt="User Avatar" 
                         class="w-12 h-12 rounded-full object-cover cursor-pointer"
                         onClick={() => document.getElementById("avatarInput")?.click()}

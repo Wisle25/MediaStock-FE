@@ -104,13 +104,13 @@ const AssetForm: Component = () => {
             const responseJson = await response.json();
    
             setAssetInput(responseJson.data)
-            const url = "http://localhost:9000/media-stock/" + responseJson.data.file_watermark_path
+            const url = responseJson.data.filePath
             setExistedFile(url);
 
             // Get File Data
             const fileResponse = await fetch(url)
             const blob = await fileResponse.blob();
-            setSelectedFile(new File([blob], responseJson.data.file_watermark_path, { type: blob.type })) 
+            setSelectedFile(new File([blob], responseJson.data.filePath, { type: blob.type })) 
         }
     })
 

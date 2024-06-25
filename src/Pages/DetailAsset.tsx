@@ -38,7 +38,7 @@ const DetailAsset: Component = () => {
 
         if (responseJson.status === "success") {
             navigate("/store");
-            showToast({ status: responseJson.status, message: responseJson.message })
+            showToast(responseJson)
         }
     }
 
@@ -48,7 +48,7 @@ const DetailAsset: Component = () => {
 
     const toggleFavorite = async () => {
         const response = await fetch("http://localhost:8000/favorites/" + asset().id, {
-            method: `${asset().is_favorite ? "DELETE" : "POST"}`,
+            method: `${asset().isFavorite ? "DELETE" : "POST"}`,
             credentials: "include",
         })
         const responseJson = await response.json();
@@ -111,24 +111,24 @@ const DetailAsset: Component = () => {
             {asset.error && <p>There is an error!</p>}
             {asset() && (
             <div class="flex gap-10">
-                <img src={"http://localhost:9000/media-stock/" + asset().file_watermark_path} alt={asset().title} class="w-1/2 h-fit object-cover rounded-lg shadow-md" />
+                <img src={asset().filePath} alt={asset().title} class="w-1/2 h-fit object-cover rounded-lg shadow-md" />
                 <div class="w-1/2 font-['Nunito']">
                     <section class="flex justify-between">
                         {/* Title and Owner */}
                         <div>
                             <h1 class="text-4xl font-bold text-primary">{asset().title}</h1>
-                            <p class="text-xl">{asset().owner_username}</p>
+                            <p class="text-xl">{asset().ownerUsername}</p>
                         </div>
 
                         {/* Time info */}
                         <div class="flex justify-center items-center gap-x-2">
-                            <p class="p-1 border-2 border-primary rounded">Created: {new Date(asset().created_at).toLocaleDateString()}</p>
-                            {asset().updated_at != asset().created_at && 
-                             <p class="p-1 border-2 border-primary rounded">Updated: {new Date(asset().updated_at).toLocaleDateString()}</p>
+                            <p class="p-1 border-2 border-primary rounded">Created: {new Date(asset().createdAt).toLocaleDateString()}</p>
+                            {asset().updatedAt != asset().createdAt && 
+                             <p class="p-1 border-2 border-primary rounded">Updated: {new Date(asset().updatedAt).toLocaleDateString()}</p>
                             }
 
                             {/* Delete Asset (Only appears to admin or owner) */}
-                            {(loggedUser() != null && loggedUser().id === asset().owner_id) && (
+                            {(loggedUser() != null && loggedUser().id === asset().ownerId) && (
                             <>
                                 <button title="Update asset" onClick={() => navigate(`/asset-form?ctx=update&id=${asset().id}`)}>
                                     <i class="fa-solid fa-pen-to-square text-2xl p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"></i>
@@ -146,10 +146,10 @@ const DetailAsset: Component = () => {
                             <i class="fas fa-star mr-1"></i>{asset().rating}/5
                         </div>
                         <div class="flex items-center text-red-500">
-                            <i class="fas fa-heart mr-1"></i>{asset().favorite_count} Likes
+                            <i class="fas fa-heart mr-1"></i>{asset().favoriteCount} Likes
                         </div>
                         <div class="flex items-center text-green-700">
-                            <i class="fa-solid fa-cart-shopping mr-1"></i>{asset().purchased_count} Purchased
+                            <i class="fa-solid fa-cart-shopping mr-1"></i>{asset().purchasedCount} Purchased
                         </div>
                     </section>
 
@@ -163,12 +163,12 @@ const DetailAsset: Component = () => {
 
                     {/* Pricing and interaction */}
                     <div class="flex justify-between items-center">
-                        <Show when={!asset().is_purchased}>
+                        <Show when={!asset().isPurchased}>
                             <p class="font-['Teko'] text-4xl font-bold">{Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(asset().price)}</p>
                         </Show>
 
                         <div class="flex gap-x-5">
-                            {asset().is_purchased ? 
+                            {asset().isPurchased ? 
                                 <Button
                                     text="Download"
                                     isFull={false}
@@ -186,7 +186,7 @@ const DetailAsset: Component = () => {
                                 />
                             }
                             <Button 
-                                text={`${asset().is_favorite ? "Remove from " : "Add To "} Favorite`} 
+                                text={`${asset().isFavorite ? "Remove from " : "Add To "} Favorite`} 
                                 isFull={false} class="bg-red-500 hover:!bg-red-600 text-xl" 
                                 icon="fas fa-heart"
                                 onClick={toggleFavorite}
@@ -206,8 +206,8 @@ const DetailAsset: Component = () => {
                         <Comment
                             id={item.id}
                             username={item.username} 
-                            avatarUrl={item.avatar_link} 
-                            commentDate={item.created_at}
+                            avatarUrl={item.avatarLink} 
+                            commentDate={item.createdAt}
                             commentText={item.content} 
                             owned={loggedUser() && loggedUser().username === item.username}
                         />
@@ -223,15 +223,15 @@ const DetailAsset: Component = () => {
                             <Review
                                 id={item.id}
                                 username={item.username} 
-                                avatarUrl={item.user_avatar} 
+                                avatarUrl={item.userAvatar} 
                                 description={item.description} 
-                                reviewDate={item.created_at} 
+                                reviewDate={item.createdAt} 
                                 score={item.score}
                                 owned={hasRating() == idx()}
                             />
                         }
                     </For>
-                    <Show when={asset() && asset().is_purchased && hasRating() === -1}>
+                    <Show when={asset() && asset().isPurchased && hasRating() === -1}>
                         <RatingForm assetId={asset().id} />
                     </Show>
                 </section>

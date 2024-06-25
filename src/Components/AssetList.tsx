@@ -1,15 +1,18 @@
 import { useNavigate } from "@solidjs/router";
-import { Component } from "solid-js";
+import { Component, mergeProps } from "solid-js";
 
 interface AssetListProps {
     id: string;
     imageUrl: string;
     title: string;
     price: number;
-    onDeleteClick: (id: string) => void;
+    showDelete?: boolean;
+    onDeleteClick?: (id: string) => void;
 }
 
 const AssetList: Component<AssetListProps> = (props) => {
+    const mergedProps = mergeProps({ showDelete: true }, props);
+
     const navigate = useNavigate();
 
     const toAsset = () => {
@@ -17,7 +20,7 @@ const AssetList: Component<AssetListProps> = (props) => {
     }
 
     return (
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center bg-white rounded-md my-2">
             <div class="flex items-center gap-4 p-4 border-b border-gray-300 cursor-pointer hover:bg-gray-200 w-full" onClick={toAsset}>
                 <img src={props.imageUrl} alt={props.title} class="w-16 h-16 object-cover rounded-lg" />
                 <section>
@@ -25,7 +28,9 @@ const AssetList: Component<AssetListProps> = (props) => {
                     <p class="text-gray-500">Rp {props.price}</p>
                 </section>
             </div>
-            <i class="fa-solid fa-trash text-red-600 text-2xl cursor-pointer" title="Delete" onClick={() => props.onDeleteClick(props.id)}></i>
+            {mergedProps.showDelete && (
+                <i class="fa-solid fa-trash text-red-600 text-2xl cursor-pointer" title="Delete" onClick={() => props.onDeleteClick(props.id)}></i>
+            )}
         </div>
     );
 };

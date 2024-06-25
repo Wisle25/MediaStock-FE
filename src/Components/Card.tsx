@@ -7,8 +7,8 @@ interface CardProps {
     ownerUsername: string;
     description: string;
     imageUrl: string;
-    favorite_count: number;
-    is_favorite: boolean;
+    favoriteCount: number;
+    isFavorite: boolean;
     rating: number;
 
     onClick: (id: string) => void;
@@ -19,7 +19,7 @@ const Card: Component<CardProps> = (props) => {
 
     const toggleFavorite = async () => {
         const response = await fetch("http://localhost:8000/favorites/" + props.id, {
-            method: `${props.is_favorite ? "DELETE" : "POST"}`,
+            method: `${props.isFavorite ? "DELETE" : "POST"}`,
             credentials: "include",
         })
         const responseJson = await response.json();
@@ -45,7 +45,7 @@ const Card: Component<CardProps> = (props) => {
             <div class="absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-300 hover:opacity-100">
                 <div class="flex justify-between items-start bg-black bg-opacity-50 p-2">
                     <i 
-                        class={`${props.is_favorite ? "fa-solid" : "fa-regular"} fa-heart text-red-500 text-3xl transition-transform duration-300 hover:scale-125`} 
+                        class={`${props.isFavorite ? "fa-solid" : "fa-regular"} fa-heart text-red-500 text-3xl transition-transform duration-300 hover:scale-125`} 
                         title="Add to Favorite" 
                         onClick={toggleFavorite}
                     ></i>
@@ -60,7 +60,7 @@ const Card: Component<CardProps> = (props) => {
 
             <section class="px-6 pt-2 flex justify-between items-center">
                 <div class="flex items-center text-red-500">
-                    <i class="fas fa-heart mr-1"></i>{props.favorite_count}
+                    <i class="fas fa-heart mr-1"></i>{props.favoriteCount}
                 </div>
                 <div class="flex items-center text-yellow-500">
                     <i class="fas fa-star mr-1"></i>{props.rating}

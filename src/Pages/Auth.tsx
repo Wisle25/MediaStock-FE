@@ -56,7 +56,7 @@ const Auth: Component = () => {
 
             const errors = data.message.split("\n")[1].split(";").reduce((acc, error) => {
                 const [field, message] = error.split(":");
-                const fieldKey = field.trim().toLowerCase() === 'confirmpassword' ? 'confirmPassword' : field.trim().toLowerCase();
+                const fieldKey = field.trim().toLowerCase() === 'confirmPassword' ? 'confirmPassword' : field.trim().toLowerCase();
                 acc[fieldKey] = message.trim();
                 return acc;
             }, {});

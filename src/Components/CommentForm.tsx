@@ -20,7 +20,7 @@ const CommentForm: Component<CommentProps> = (props) => {
 
         // Handle form submission
         const commentData = {
-            asset_id: props.assetId,
+            assetId: props.assetId,
             content: commentText(),
         };
 

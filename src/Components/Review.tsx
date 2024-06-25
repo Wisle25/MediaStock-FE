@@ -15,7 +15,6 @@ interface ReviewProps {
 
 const Review: Component<ReviewProps> = (props) => {
     const { showToast } = useToaster();
-    const minio = "http://localhost:9000/media-stock/"
 
     const deleteRating = async () => {
         const response = await fetch("http://localhost:8000/ratings/" + props.id, {
@@ -30,7 +29,7 @@ const Review: Component<ReviewProps> = (props) => {
     return (
         <div class="flex items-center space-x-4 border-b border-gray-200 justify-between">
             <div class="flex items-start space-x-4 p-4">
-                <img src={props.avatarUrl === "" ? anonym : minio + props.avatarUrl} alt={`${props.username}'s avatar`} class="w-12 h-12 rounded-full object-cover" />
+                <img src={props.avatarUrl === "" ? anonym : props.avatarUrl} alt={`${props.username}'s avatar`} class="w-12 h-12 rounded-full object-cover" />
                 <div>
                     <div class="flex items-center justify-between space-x-2">
                         <h4 class="font-semibold">{props.username}</h4>

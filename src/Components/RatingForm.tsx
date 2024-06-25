@@ -25,7 +25,7 @@ const RatingForm: Component<RatingProps> = (props) => {
         
         // Handle form submission
         const ratingData = {
-            asset_id: props.assetId,
+            assetId: props.assetId,
             score: score(),
             description: description(),
         };
