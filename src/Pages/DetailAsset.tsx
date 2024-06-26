@@ -59,6 +59,12 @@ const DetailAsset: Component = () => {
     }
 
     const toggleCart = async () => {
+        if (!loggedUser().isVerified) {
+            showToast({status: "failed", message: "You have to verify account to checkout!"})
+
+            return;
+        }
+
         const response = await fetch("http://localhost:8000/carts/" + asset().id, {
             method: `POST`,
             credentials: "include",
@@ -128,7 +134,7 @@ const DetailAsset: Component = () => {
                             }
 
                             {/* Delete Asset (Only appears to admin or owner) */}
-                            {(loggedUser() != null && loggedUser().id === asset().ownerId) && (
+                            {(loggedUser() != null && (loggedUser().id === asset().ownerId || loggedUser().role === "Admin")) && (
                             <>
                                 <button title="Update asset" onClick={() => navigate(`/asset-form?ctx=update&id=${asset().id}`)}>
                                     <i class="fa-solid fa-pen-to-square text-2xl p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"></i>
@@ -141,17 +147,23 @@ const DetailAsset: Component = () => {
                     </section>
                     
                     {/* Review, Favorite, Bought for x times */}
-                    <section class="flex items-center gap-x-10 text-2xl shadow-lg w-fit p-3 rounded border-2 my-4">
-                        <div class="flex items-center text-yellow-500">
-                            <i class="fas fa-star mr-1"></i>{asset().rating}/5
-                        </div>
-                        <div class="flex items-center text-red-500">
-                            <i class="fas fa-heart mr-1"></i>{asset().favoriteCount} Likes
-                        </div>
-                        <div class="flex items-center text-green-700">
-                            <i class="fa-solid fa-cart-shopping mr-1"></i>{asset().purchasedCount} Purchased
-                        </div>
-                    </section>
+                    <div class="flex justify-between">
+                        <section class="flex items-center gap-x-10 text-2xl shadow-lg w-fit p-3 rounded border-2 my-4">
+                            <div class="flex items-center text-yellow-500">
+                                <i class="fas fa-star mr-1"></i>{asset().rating}/5
+                            </div>
+                            <div class="flex items-center text-red-500">
+                                <i class="fas fa-heart mr-1"></i>{asset().favoriteCount} Likes
+                            </div>
+                            <div class="flex items-center text-green-700">
+                                <i class="fa-solid fa-cart-shopping mr-1"></i>{asset().purchasedCount} Purchased
+                            </div>
+                        </section>
+
+                        <section class="flex items-center text-xl w-fit p-3 rounded border-2 my-4 bg-blue-500 text-white font-bold">
+                            {asset().category}
+                        </section>
+                    </div>
 
                     {/* Description and Details */}
                     <section class="my-4 border-y-2 border-gray-300 py-3">
@@ -168,7 +180,7 @@ const DetailAsset: Component = () => {
                         </Show>
 
                         <div class="flex gap-x-5">
-                            {asset().isPurchased ? 
+                            {asset().isPurchased ?
                                 <Button
                                     text="Download"
                                     isFull={false}

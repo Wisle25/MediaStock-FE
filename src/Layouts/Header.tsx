@@ -40,6 +40,12 @@ const Header: Component = () => {
     }
 
     const toDashboard = () => {
+        if (!loggedUser().isVerified) {
+            showToast({status: "failed", message: "You have to verify account to access dashboard!"})
+
+            return;
+        }
+
         navigate("/dashboard")
         setUserOptionOpen(false);
     }

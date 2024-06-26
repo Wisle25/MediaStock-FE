@@ -1,4 +1,4 @@
-import { Component, createResource, createSignal, For } from "solid-js";
+import { Component, createResource, createSignal, For, onMount } from "solid-js";
 import { useAuth } from "../Providers/AuthProvider";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
@@ -6,9 +6,11 @@ import Button from "../Components/Button";
 import anonym from "/Anonym.jpg?url"
 import { useToaster } from "../Providers/ToastProvider";
 import AssetList from "../Components/AssetList";
+import { useNavigate } from "@solidjs/router";
 
 const Dashboard: Component = () => {
     const { showToast } = useToaster();
+    const navigate = useNavigate();
 
     // User
     const { loggedUser, refreshUser } = useAuth();
@@ -89,6 +91,13 @@ const Dashboard: Component = () => {
 
         if (responseJson.status === "success") {
             return responseJson.data;
+        }
+    })
+
+    // Throw
+    onMount(() => {
+        if (!loggedUser() || !loggedUser().isVerified) {
+            navigate("/");
         }
     })
 

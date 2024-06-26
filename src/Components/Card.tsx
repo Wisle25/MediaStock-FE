@@ -1,5 +1,6 @@
 import { Component } from "solid-js";
 import { useToaster } from "../Providers/ToastProvider";
+import { useAuth } from "../Providers/AuthProvider";
 
 interface CardProps {
     id: string;
@@ -10,12 +11,14 @@ interface CardProps {
     favoriteCount: number;
     isFavorite: boolean;
     rating: number;
+    category: string;
 
     onClick: (id: string) => void;
 }
 
 const Card: Component<CardProps> = (props) => {
     const { showToast } = useToaster();
+    const { loggedUser } = useAuth();
 
     const toggleFavorite = async () => {
         const response = await fetch("http://localhost:8000/favorites/" + props.id, {
@@ -28,6 +31,12 @@ const Card: Component<CardProps> = (props) => {
     }
 
     const toggleCart = async () => {
+        if (!loggedUser().isVerified) {
+            showToast({status: "failed", message: "You have to verify account to add to cart!"})
+
+            return;
+        }
+
         const response = await fetch("http://localhost:8000/carts/" + props.id, {
             method: `POST`,
             credentials: "include",
@@ -39,7 +48,7 @@ const Card: Component<CardProps> = (props) => {
 
     return (
         <div 
-            class="relative w-96 h-80 border-2 border-gray-100 rounded overflow-hidden shadow-lg bg-white cursor-pointer transform transition-transform duration-300 hover:scale-105"
+            class="relative w-96 h-96 border-2 border-gray-100 rounded overflow-hidden shadow-lg bg-white cursor-pointer transform transition-transform duration-300 hover:scale-105"
             onClick={() => props.onClick(props.id)}
         >
             <div class="absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-300 hover:opacity-100">
@@ -67,12 +76,16 @@ const Card: Component<CardProps> = (props) => {
                 </div>
             </section>
 
+
             <section class="px-6 pb-4">
                 <div class="flex justify-between items-center">
                     <div class="font-bold text-xl">{props.title}</div>
                     <div class="text-gray-700 text-base">{props.ownerUsername}</div>
                 </div>
-                <p class="text-gray-700 text-base">
+                <div class="p-2 bg-blue-500 w-fit text-white rounded-md font-bold text-xs">
+                    {props.category}
+                </div>
+                <p class="text-gray-700 text-base h-20 overflow-y-auto">
                     {props.description}
                 </p>
             </section>

@@ -6,6 +6,7 @@ interface User {
     email: string;
     avatarLink: string;
     isVerified: boolean;
+    role: string;
 }
 
 interface AuthContextType {
@@ -27,6 +28,7 @@ export const AuthProvider: Component<ParentProps> = (props) => {
 
         if (responseJson.status === "success") {
             setLoggedUser(responseJson.data);
+            console.log(loggedUser());
         } else {
             // If not, try to refresh auth/token
             refreshAuth();

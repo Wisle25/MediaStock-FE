@@ -4,9 +4,11 @@ import AssetList from "../Components/AssetList";
 import Link from "../Components/Link";
 import { useToaster } from "../Providers/ToastProvider";
 import Button from "../Components/Button";
+import { useAuth } from "../Providers/AuthProvider";
 
 const AssetPage: Component = () => {
     const { showToast } = useToaster();
+    const { loggedUser } = useAuth();
 
     // Favorites
     const [favorites] = createResource(async () => {
@@ -74,6 +76,12 @@ const AssetPage: Component = () => {
     }
 
     const checkOut = async () => {
+        if (!loggedUser().isVerified) {
+            showToast({status: "failed", message: "You have to verify account to checkout!"})
+
+            return;
+        }
+
         const response = await fetch("http://localhost:8000/transactions", {
             method: "POST",
             headers: {

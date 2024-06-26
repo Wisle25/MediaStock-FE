@@ -17,7 +17,7 @@ const Store: Component = () => {
     // Fetch assets function
     const fetchAssets = async () => {
         const response = await fetch(
-            `http://localhost:8000/assets?listCount=${items()}&pageList=${page()}&sortBy=${searchParams.sort}${searchParams.search ? "&search=" + searchParams.search : ""}${loggedUser() ? "&userId=" + loggedUser().id : ""}`
+            `http://localhost:8000/assets?listCount=${items()}&pageList=${page()}&sortBy=${searchParams.sort}${searchParams.search ? "&search=" + searchParams.search : ""}${searchParams.category ? "&category=" + searchParams.category : ""}${loggedUser() ? "&userId=" + loggedUser().id : ""}`
         );
         const responseJson = await response.json();
 
@@ -29,7 +29,7 @@ const Store: Component = () => {
     };
 
     // Create resource with fetcher function and dependencies
-    const [assets, { refetch }] = createResource(() => [searchParams.sort, searchParams.search, page()], fetchAssets);
+    const [assets] = createResource(() => [searchParams.sort, searchParams.search, searchParams.category, page()], fetchAssets);
 
     // SideBar
     const [isSidebarOpen, setSidebarOpen] = createSignal(false);
@@ -59,13 +59,14 @@ const Store: Component = () => {
                 <section class="flex justify-center gap-x-5 mt-5 h-[50rem] overflow-y-auto">
                     {assets.loading && <p>Please wait...</p>}
                     {assets.error && <p>There is an error!</p>}
-                    <For each={assets()} fallback={<div>Loading...</div>}>
+                    <For each={assets()} fallback={<div>Assets not found!</div>}>
                         {(item) => (
                             <Card
                                 id={item.id}
                                 title={item.title}
                                 ownerUsername={item.ownerUsername}
                                 description={item.description}
+                                category={item.category}
                                 imageUrl={item.filePath}
                                 favoriteCount={item.favoriteCount}
                                 isFavorite={item.isFavorite}

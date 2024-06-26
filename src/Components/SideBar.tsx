@@ -1,14 +1,20 @@
 import { Component, createSignal, onCleanup, onMount, Show } from "solid-js";
+import { useSearchParams } from "@solidjs/router";
+import { useAuth } from "../Providers/AuthProvider";
+import Link from "./Link";
 
 interface SidebarProps {
     toggleSidebar: (e: Event) => void;
 }
 
 const Sidebar: Component<SidebarProps> = (props) => {
+    const { loggedUser } = useAuth();
+
     const [categoryOpen, setCategoryOpen] = createSignal(false);
     const [typeOpen, setTypeOpen] = createSignal(false);
     const [isHidden, setHidden] = createSignal(true);
     const [animateOpen, setAnimateOpen] = createSignal(false);
+    const [_, setSearchParams] = useSearchParams();
 
     const ToggleHide = () => {
         if (isHidden()) {
@@ -27,6 +33,10 @@ const Sidebar: Component<SidebarProps> = (props) => {
             setHidden(true);
         }
     }
+
+    const handleCategoryChange = (category: string) => {
+        setSearchParams({ category });
+    };
 
     onMount(ToggleHide);
 
@@ -65,22 +75,25 @@ const Sidebar: Component<SidebarProps> = (props) => {
                 <Show when={categoryOpen()}>
                     <div class="mt-2">
                         <label class="flex items-center mb-2">
-                            <input type="radio" name="category" class="mr-2" /> Panorama
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("")} /> All
                         </label>
                         <label class="flex items-center mb-2">
-                            <input type="radio" name="category" class="mr-2" /> City and Architecture
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("Panorama")} /> Panorama
                         </label>
                         <label class="flex items-center mb-2">
-                            <input type="radio" name="category" class="mr-2" /> Peoples and Portraits
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("City and Architecture")} /> City and Architecture
                         </label>
                         <label class="flex items-center mb-2">
-                            <input type="radio" name="category" class="mr-2" /> Foods and Drink
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("Peoples and Portraits")} /> Peoples and Portraits
                         </label>
                         <label class="flex items-center mb-2">
-                            <input type="radio" name="category" class="mr-2" /> Animals
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("Foods and Drink")} /> Foods and Drink
                         </label>
                         <label class="flex items-center mb-2">
-                            <input type="radio" name="category" class="mr-2" /> Object
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("Animals")} /> Animals
+                        </label>
+                        <label class="flex items-center mb-2">
+                            <input type="radio" name="category" class="mr-2" onClick={() => handleCategoryChange("Object")} /> Object
                         </label>
                     </div>
                 </Show>
@@ -108,6 +121,17 @@ const Sidebar: Component<SidebarProps> = (props) => {
                     </div>
                 </Show>
             </div>
+
+            {/* Add Asset */}
+            <Show when={loggedUser()?.role  === "Admin" || loggedUser()?.role  === "Seller"}>
+                <Link 
+                    href="/asset-form"
+                    class="p-2 bg-blue-500 text-white font-bold rounded-md text-center text-lg"
+                >
+                    <i class="fa-solid fa-plus mr-2"></i>
+                    Add Asset
+                </Link>
+            </Show>
         </aside>
     );
 };
