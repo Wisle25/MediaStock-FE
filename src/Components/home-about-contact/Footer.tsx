@@ -1,5 +1,7 @@
 import Link from "../Link";
 
+import logo from "/assets/img/logo.png?url"
+
 const Footer = () => {
     return (
         <footer id="footer" class="bg-blue-50 py-4 footer">
@@ -25,7 +27,7 @@ const Footer = () => {
 const FooterInfoBox = () => (
     <div class="col-span-2">
         <a href="" class="flex items-center logo">
-            <img src="../src/assets/img/logo.png" alt="" class="max-h-10" />
+            <img src={logo} alt="" class="max-h-10" />
             <span class="font-semibold text-primary text-xl">Media Stock</span>
         </a>
         <div class="mt-4">

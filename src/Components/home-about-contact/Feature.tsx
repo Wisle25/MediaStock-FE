@@ -1,5 +1,6 @@
-import { createSignal } from 'solid-js';
 import { AiOutlineCheckSquare } from 'solid-icons/ai';
+
+import features from "assets/img/features.png?url"
 
 const Feature = () => {
     return (
@@ -10,7 +11,7 @@ const Feature = () => {
                 </header>
                 <div class="flex flex-wrap md:flex-nowrap justify-center items-center">
                     <div class="md:pr-4 md:w-6/12 lg:w-6/12">
-                        <img src="../src/assets/img/features.png" class="p-8 img-fluid" alt="" />
+                        <img src={features} class="p-8 img-fluid" alt="" />
                     </div>
                     <div class="mt-5 md:mt-0 md:w-6/12 lg:w-6/12">
                         <div class="gap-4 grid my-10">

@@ -1,5 +1,9 @@
 import { createSignal } from 'solid-js';
 
+import values1 from "/src/assets/img/values-1.jpg?url"
+import values2 from "/src/assets/img/values-2.jpg?url"
+import values3 from "/src/assets/img/values-3.jpg?url"
+
 const Values = () => {
     return (
         <section id="values" class="py-10 w-full values">
@@ -9,19 +13,19 @@ const Values = () => {
                 </header>
                 <div class="flex flex-wrap -mx-1 mt-10 px-10">
                     <AssetBox
-                        imgSrc="../src/assets/img/values-1.jpg"
+                        imgSrc={values1}
                         title="Asset Gambar"
                         description="Temukan berbagai koleksi aset gambar berkualitas tinggi."
                         mtClass="mt-4 md:mt-0"
                     />
                     <AssetBox
-                        imgSrc="../src/assets/img/values-2.jpg"
+                        imgSrc={values2}
                         title="Aset Video"
                         description="Jelajahi beragam video berkualitas untuk kebutuhan Anda."
                         mtClass="mt-4 md:mt-0"
                     />
                     <AssetBox
-                        imgSrc="../src/assets/img/values-3.jpg"
+                        imgSrc={values3}
                         title="Aset Audio"
                         description="Dapatkan berbagai musik dan suara berkualitas tinggi."
                         mtClass="mt-4 md:mt-0"

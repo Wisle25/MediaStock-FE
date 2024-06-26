@@ -1,9 +1,11 @@
 import { createSignal } from "solid-js";
+import hero from "/assets/img/hero-bg.png?url"
+import heroImg from "/assets/img/hero-img.png?url"
 
 function Section() {
     return (
         <div>
-            <section id="hero" class="flex items-center bg-cover bg-no-repeat bg-top px-40 py-16 hero" style="background-image: url('../src/assets/img/hero-bg.png');">
+            <section id="hero" class="flex items-center bg-cover bg-no-repeat bg-top px-40 py-16 hero" style={`background-image: url(${hero});`}>
                 <div class="mx-auto py-4 container">
                     <div class="flex flex-wrap">
                         <div class="flex flex-col justify-center lg:w-1/2 text-center lg:text-left hero-content">
@@ -25,7 +27,7 @@ function Section() {
                             </div>
                         </div>
                         <div class="flex justify-center mt-8 lg:mt-0 lg:w-1/2 hero-img">
-                            <img src="../src/assets/img/hero-img.png" class="w-full max-w-sm lg:max-w-full" alt="hero" />
+                            <img src={heroImg} class="w-full max-w-sm lg:max-w-full" alt="hero" />
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import about from "/assets/img/about.jpg?url"
 
 function Main() {
     return (
@@ -28,7 +28,7 @@ function Main() {
                             </div>
                         </div>
                         <div class="flex items-center p-6 lg:w-1/2">
-                            <img src="../src/assets/img/about.jpg" class="w-full max-w-sm lg:max-w-full" alt="" />
+                            <img src={about} class="w-full max-w-sm lg:max-w-full" alt="" />
                         </div>
                     </div>
                 </div>
