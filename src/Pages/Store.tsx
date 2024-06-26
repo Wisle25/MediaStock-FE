@@ -59,7 +59,7 @@ const Store: Component = () => {
                 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 gap-x-2 p-5 mt-5 h-[50rem] overflow-y-auto">
                     {assets.loading && <p>Please wait...</p>}
                     {assets.error && <p>There is an error!</p>}
-                    <For each={assets()} fallback={<div>Assets not found!</div>}>
+                    <For each={assets()} fallback={<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Assets not found!</div>}>
                         {(item) => (
                             <Card
                                 id={item.id}
