@@ -1,8 +1,8 @@
 import { createSignal } from 'solid-js';
 
-import values1 from "/src/assets/img/values-1.jpg?url"
-import values2 from "/src/assets/img/values-2.jpg?url"
-import values3 from "/src/assets/img/values-3.jpg?url"
+import values1 from "/assets/img/values-1.jpg?url"
+import values2 from "/assets/img/values-2.jpg?url"
+import values3 from "/assets/img/values-3.jpg?url"
 
 const Values = () => {
     return (
