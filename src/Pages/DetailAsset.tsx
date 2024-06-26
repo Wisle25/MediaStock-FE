@@ -148,7 +148,7 @@ const DetailAsset: Component = () => {
                     
                     {/* Review, Favorite, Bought for x times */}
                     <div class="flex justify-between">
-                        <section class="flex items-center gap-x-10 text-2xl shadow-lg w-fit p-3 rounded border-2 my-4">
+                        <section class="flex items-center gap-x-10 text-xl shadow-lg w-fit p-3 rounded border-2 my-4">
                             <div class="flex items-center text-yellow-500">
                                 <i class="fas fa-star mr-1"></i>{asset().rating}/5
                             </div>

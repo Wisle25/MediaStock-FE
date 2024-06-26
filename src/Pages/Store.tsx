@@ -12,7 +12,7 @@ const Store: Component = () => {
 
     // Pagination
     const [page, setPage] = createSignal(parseInt(searchParams.page) || 1);
-    const [items] = createSignal(25);
+    const [items] = createSignal(24);
 
     // Fetch assets function
     const fetchAssets = async () => {
@@ -56,7 +56,7 @@ const Store: Component = () => {
                 <h1 class="text-center font-['Teko'] font-bold text-4xl mt-5">Store</h1>
                 <p class="text-center font-['Nunito'] text-sm">Looking for awesome store? Here you can find a bunch!</p>
 
-                <section class="flex justify-center gap-x-5 mt-5 h-[50rem] overflow-y-auto">
+                <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 gap-x-2 p-5 mt-5 h-[50rem] overflow-y-auto">
                     {assets.loading && <p>Please wait...</p>}
                     {assets.error && <p>There is an error!</p>}
                     <For each={assets()} fallback={<div>Assets not found!</div>}>
