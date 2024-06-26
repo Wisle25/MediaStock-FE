@@ -38,7 +38,7 @@ const Auth: Component = () => {
     const submitRegister = async (e: Event) => {
         e.preventDefault();
 
-        const response = await fetch("http://localhost:8000/users", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const Auth: Component = () => {
     const submitLogin = async (e: Event) => {
         e.preventDefault();
 
-        const response = await fetch("http://localhost:8000/auths", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/auths", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

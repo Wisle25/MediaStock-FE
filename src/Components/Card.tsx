@@ -21,7 +21,7 @@ const Card: Component<CardProps> = (props) => {
     const { loggedUser } = useAuth();
 
     const toggleFavorite = async () => {
-        const response = await fetch("http://localhost:8000/favorites/" + props.id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/favorites/" + props.id, {
             method: `${props.isFavorite ? "DELETE" : "POST"}`,
             credentials: "include",
         })
@@ -37,7 +37,7 @@ const Card: Component<CardProps> = (props) => {
             return;
         }
 
-        const response = await fetch("http://localhost:8000/carts/" + props.id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/carts/" + props.id, {
             method: `POST`,
             credentials: "include",
         })

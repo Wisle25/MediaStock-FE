@@ -18,7 +18,7 @@ const Header: Component = () => {
 
     // Log out handling
     const handleLogout = async (e: Event) => {
-        const response = await fetch("http://localhost:8000/auths", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/auths", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

@@ -20,7 +20,7 @@ export const AuthProvider: Component<ParentProps> = (props) => {
     const [loggedUser, setLoggedUser] = createSignal<User | null>(null);
 
     const fetchUserData = async () => {
-        const response = await fetch("http://localhost:8000/auths", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/auths", {
             method: "GET",
             credentials: "include",
         });
@@ -36,7 +36,7 @@ export const AuthProvider: Component<ParentProps> = (props) => {
     };
 
     const refreshAuth = async () => {
-        const response = await fetch("http://localhost:8000/auths", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/auths", {
             method: "PUT",
             credentials: "include"
         });

@@ -25,7 +25,7 @@ const CommentForm: Component<CommentProps> = (props) => {
         };
 
         // Send request to server to add comment
-        const response = await fetch("http://localhost:8000/comments", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/comments", {
             method: "POST",
             credentials: "include",
             headers: {

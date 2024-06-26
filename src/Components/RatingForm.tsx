@@ -31,7 +31,7 @@ const RatingForm: Component<RatingProps> = (props) => {
         };
 
         // Send to API
-        const response = await fetch("http://localhost:8000/ratings", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/ratings", {
             method: "POST",
             credentials: "include",
             headers: {

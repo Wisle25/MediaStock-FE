@@ -64,7 +64,7 @@ const AssetForm: Component = () => {
 
         // Send to Back-End
         if (searchParams.ctx == "update") {
-            const response = await fetch("http://localhost:8000/assets/" + searchParams.id, {
+            const response = await fetch("https://helpful-serenity-production.up.railway.app/assets/" + searchParams.id, {
                 method: "PUT",
                 body: formData,
                 credentials: "include"
@@ -76,7 +76,7 @@ const AssetForm: Component = () => {
                 navigate("/asset/" + searchParams.id);
             }
         } else {
-            const response = await fetch("http://localhost:8000/assets", {
+            const response = await fetch("https://helpful-serenity-production.up.railway.app/assets", {
                 method: "POST",
                 body: formData,
                 credentials: "include"
@@ -96,7 +96,7 @@ const AssetForm: Component = () => {
         if (searchParams.ctx == "update") {
             // Get Text Data
             const assetId = searchParams.id;
-            const response = await fetch(`http://localhost:8000/assets/${assetId}?userId=`+loggedUser().id, {
+            const response = await fetch(`https://helpful-serenity-production.up.railway.app/assets/${assetId}?userId=`+loggedUser().id, {
                 method: "GET",
                 credentials: "include",
             });

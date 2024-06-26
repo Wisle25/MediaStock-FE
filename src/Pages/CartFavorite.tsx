@@ -12,7 +12,7 @@ const AssetPage: Component = () => {
 
     // Favorites
     const [favorites] = createResource(async () => {
-        const response = await fetch("http://localhost:8000/favorites", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/favorites", {
             method: "GET",
             credentials: "include",
         });
@@ -22,7 +22,7 @@ const AssetPage: Component = () => {
     })
 
     const removeFavorite = async (id: string) => {
-        const response = await fetch("http://localhost:8000/favorites/" + id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/favorites/" + id, {
             method: "DELETE",
             credentials: "include",
         })
@@ -39,7 +39,7 @@ const AssetPage: Component = () => {
     const [assetsId, setAssetsId] = createSignal<string[]>([])
 
     const [carts] = createResource(async () => {
-        const response = await fetch("http://localhost:8000/carts", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/carts", {
             method: "GET",
             credentials: "include",
         });
@@ -54,7 +54,7 @@ const AssetPage: Component = () => {
         return responseJson.data;
     })
     const removeCart = async (id: string) => {
-        const response = await fetch("http://localhost:8000/carts/" + id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/carts/" + id, {
             method: "DELETE",
             credentials: "include",
         })
@@ -67,7 +67,7 @@ const AssetPage: Component = () => {
     }
 
     const removeAllCart = async () => {
-        const response = await fetch("http://localhost:8000/carts", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/carts", {
             method: "DELETE",
             credentials: "include"
         })
@@ -82,7 +82,7 @@ const AssetPage: Component = () => {
             return;
         }
 
-        const response = await fetch("http://localhost:8000/transactions", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/transactions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

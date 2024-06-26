@@ -17,7 +17,7 @@ const Store: Component = () => {
     // Fetch assets function
     const fetchAssets = async () => {
         const response = await fetch(
-            `http://localhost:8000/assets?listCount=${items()}&pageList=${page()}&sortBy=${searchParams.sort}${searchParams.search ? "&search=" + searchParams.search : ""}${searchParams.category ? "&category=" + searchParams.category : ""}${loggedUser() ? "&userId=" + loggedUser().id : ""}`
+            `https://helpful-serenity-production.up.railway.app/assets?listCount=${items()}&pageList=${page()}&sortBy=${searchParams.sort}${searchParams.search ? "&search=" + searchParams.search : ""}${searchParams.category ? "&category=" + searchParams.category : ""}${loggedUser() ? "&userId=" + loggedUser().id : ""}`
         );
         const responseJson = await response.json();
 

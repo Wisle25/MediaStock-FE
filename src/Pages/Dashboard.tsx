@@ -41,7 +41,7 @@ const Dashboard: Component = () => {
             formData.append("avatar", avatar()!);
         }
 
-        const response = await fetch("http://localhost:8000/users/" + loggedUser().id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/users/" + loggedUser().id, {
             method: "PUT",
             credentials: "include",
             body: formData,
@@ -57,7 +57,7 @@ const Dashboard: Component = () => {
 
     // Transaction History
     const [transactions] = createResource(async () => {
-        const response = await fetch("http://localhost:8000/transactions", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/transactions", {
             method: "GET",
             credentials: "include"
         })
@@ -70,7 +70,7 @@ const Dashboard: Component = () => {
 
     // Purchased Asset
     const [purchased] = createResource(async () => {
-        const response = await fetch("http://localhost:8000/purchased", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/purchased", {
             method: "GET",
             credentials: "include"
         })
@@ -83,7 +83,7 @@ const Dashboard: Component = () => {
 
     // Owned Asset
     const [owned] = createResource(async () => {
-        const response = await fetch("http://localhost:8000/assetsMe", {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/assetsMe", {
             method: "GET",
             credentials: "include"
         })

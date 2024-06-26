@@ -27,7 +27,7 @@ const Comment: Component<CommentProps> = (props) => {
         e.preventDefault();
 
         // Send request to server to edit comment
-        const response = await fetch("http://localhost:8000/comments/" + props.id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/comments/" + props.id, {
             method: "PUT",
             credentials: "include",
             headers: {
@@ -42,7 +42,7 @@ const Comment: Component<CommentProps> = (props) => {
     };
 
     const handleRemove = async () => {
-        const response = await fetch("http://localhost:8000/comments/" + props.id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/comments/" + props.id, {
             method: "DELETE",
             credentials: "include"
         })

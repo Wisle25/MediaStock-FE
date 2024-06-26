@@ -16,7 +16,7 @@ const DetailAsset: Component = () => {
 
     // Fetch the asset details using the asset id from the route
     const [asset] = createResource(async () => {
-        const response = await fetch(`http://localhost:8000/assets/${params.id}${ loggedUser() ? "?userId=" + loggedUser().id : "" }`);
+        const response = await fetch(`https://helpful-serenity-production.up.railway.app/assets/${params.id}${ loggedUser() ? "?userId=" + loggedUser().id : "" }`);
         const responseJson = await response.json();
 
         if (responseJson.status === "success") {
@@ -29,7 +29,7 @@ const DetailAsset: Component = () => {
     const deleteAsset = async (e: Event) => {
         e.preventDefault();
 
-        const response = await fetch(`http://localhost:8000/assets/${params.id}`, {
+        const response = await fetch(`https://helpful-serenity-production.up.railway.app/assets/${params.id}`, {
             method: "DELETE",
             credentials: "include"
         })
@@ -43,11 +43,11 @@ const DetailAsset: Component = () => {
     }
 
     const downloadAsset = async () => {
-        window.location.href = `http://localhost:8000/assets-download/${params.id}`
+        window.location.href = `https://helpful-serenity-production.up.railway.app/assets-download/${params.id}`
     }
 
     const toggleFavorite = async () => {
-        const response = await fetch("http://localhost:8000/favorites/" + asset().id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/favorites/" + asset().id, {
             method: `${asset().isFavorite ? "DELETE" : "POST"}`,
             credentials: "include",
         })
@@ -65,7 +65,7 @@ const DetailAsset: Component = () => {
             return;
         }
 
-        const response = await fetch("http://localhost:8000/carts/" + asset().id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/carts/" + asset().id, {
             method: `POST`,
             credentials: "include",
         })
@@ -78,7 +78,7 @@ const DetailAsset: Component = () => {
     const [ratings, setRatings] = createSignal([]);
     const [hasRating, setHasRating] = createSignal(-1);
     const fetchRating = async () => {
-        const response = await fetch("http://localhost:8000/ratings/" + asset().id);
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/ratings/" + asset().id);
         const responseJson = await response.json();
     
         if (responseJson.status === "success") {
@@ -96,7 +96,7 @@ const DetailAsset: Component = () => {
     // Comments
     const [comments, setComments] = createSignal([]);
     const fetchComments = async () => {
-        const response = await fetch("http://localhost:8000/comments/" + asset().id);
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/comments/" + asset().id);
         const responseJson = await response.json();
     
         if (responseJson.status === "success") {

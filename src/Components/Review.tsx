@@ -17,7 +17,7 @@ const Review: Component<ReviewProps> = (props) => {
     const { showToast } = useToaster();
 
     const deleteRating = async () => {
-        const response = await fetch("http://localhost:8000/ratings/" + props.id, {
+        const response = await fetch("https://helpful-serenity-production.up.railway.app/ratings/" + props.id, {
             method: "DELETE",
             credentials: "include",
         })
