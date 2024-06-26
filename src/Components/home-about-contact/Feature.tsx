@@ -1,6 +1,6 @@
 import { AiOutlineCheckSquare } from 'solid-icons/ai';
 
-import features from "assets/img/features.png?url"
+import features from "/assets/img/features.png?url"
 
 const Feature = () => {
     return (
